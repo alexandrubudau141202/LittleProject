@@ -1,4 +1,4 @@
-package ControlUNIT;
+package ControlUNIT.MyCar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class OperatingThreads extends Thread{
     Car newCar = new Car();
+    User AlexandruUser = new User();
     public void startCar() throws InterruptedException {
         newCar.setName("Audi");
         System.out.println("Welcome");
@@ -111,6 +112,14 @@ public class OperatingThreads extends Thread{
             } else if(cmd.equalsIgnoreCase("AC")){
                 forsettingAC();
             }
+            if (cmd != listActions[0] || cmd != listActions[1] || cmd != listActions[2] || cmd != listActions[3]){
+                System.out.println("Bye have a nice day");
+                Thread.sleep(450);
+                System.exit(0);
+            }
+
+
+
             if (cmd.equalsIgnoreCase("others")){
                 System.out.println("Ok, here's a list with other actions");
                 for (int i = 0; i < listActions.length; i++){
@@ -118,24 +127,28 @@ public class OperatingThreads extends Thread{
                     Thread.sleep(500);
                 }
                 System.out.println("Choose now");
-                int comand = newScanner.nextInt();
-                if (comand == 0 || comand == 1 || comand == 2 || comand == 3){
-                    System.out.println(comand + " " + listActions[comand]);
-                    if(comand == 0){
+                String comand = newScanner.next();
+                switch(comand){
+                    case "System Preferences":
                         Thread.sleep(450);
+                        System.out.println(comand);
                         enterSysPref();
-                    }
-                    if(comand == 1){
+                        break;
+                    case "Radio":
                         Thread.sleep(450);
+                        System.out.println(comand);
                         useRadio();
-                    } if(comand == 2){
+                        break;
+                    case "Media":
                         Thread.sleep(450);
+                        System.out.println(comand);
                         useMedia();
-                    }
-                    if(comand == 3){
+                        break;
+                    case "Phone":
                         Thread.sleep(450);
+                        System.out.println(comand);
                         usePhone();
-                    }
+                        break;
                 }
             }
         }
@@ -300,11 +313,59 @@ public class OperatingThreads extends Thread{
             afterStartShowWelcomePage();
         }
     }
-    private void useBluetooth(){
-        System.out.println(newCar.getName() +  " bluetooth is connected");
+    private void useBluetooth() throws InterruptedException {
+        Scanner appsScanner = new Scanner(System.in);
+        System.out.println(AlexandruUser.getName() +  " bluetooth is connected");
+        String[] appsBT = {"Spotify", "YTMusic", "AppleMusic", "Other"};
+        System.out.println("What's the app you're using for music streaming?");
+        for(int i = 0; i < appsBT.length; i++){
+            Thread.sleep(450);
+            System.out.println(appsBT[i]);
+        }
+        String appsCmd = appsScanner.next();
+        switch(appsCmd){
+            case "Spotify":
+                Thread.sleep(450);
+                System.out.println("Choose your playlist");
+                String playlistCmd = "Polske";
+                Thread.sleep(450);
+                AlexandruUser.setName("ohmyalexxu");
+                System.out.println("Playing " + playlistCmd + " by " + AlexandruUser.getName());
+                break;
+            case "YTMusic":
+                Thread.sleep(450);
+                System.out.println("Account:");
+                Thread.sleep(450);
+                System.out.println(AlexandruUser.getName());
+                Thread.sleep(450);
+                break;
+            case"AppleMusic":
+                System.out.println("Apple music is crap!!");
+                break;
+            case "Other":
+                System.out.println("G there is no other application, get outta here");
+                System.exit(0);
+                break;
+            default:
+                System.out.println("Playing from " + AlexandruUser.getName() + "'s libraries");
+        }
     }
-    private void useCD(){
+    private void useCD() throws InterruptedException{
+        Scanner choosing = new Scanner(System.in);
         System.out.println("Playing: Caseta 13 - Cântec 2 - Fac Deranj - Tzanca Uraganu");
+        Thread.sleep(500);
+        System.out.println("Playing: Disk 13 - Song 14 - La inima m-ai ars - Florin Salam");
+        Thread.sleep(500);
+        System.out.println("Disk ended, restart?");
+        String chooseYesOrNo = choosing.next();
+        if(chooseYesOrNo.equalsIgnoreCase("yes")){
+            useCD();
+        }
+        else{
+            System.out.println("Ok");
+            Thread.sleep(500);
+            afterStartShowWelcomePage();
+        }
     }
     private void useAUX(){
         System.out.println("User Auxiliary Cable for audio input is in");
