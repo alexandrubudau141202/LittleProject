@@ -49,6 +49,7 @@ public class OperatingThreads extends Thread{
 
     ArrayList<String> listOfProblems = new ArrayList<>();
     private void forRevision() throws InterruptedException{
+        Scanner scanToCheck = new Scanner(System.in);
         listOfProblems.add("Oil");
         listOfProblems.add("Engine");
         listOfProblems.add("Cooling");
@@ -61,17 +62,39 @@ public class OperatingThreads extends Thread{
             System.out.println(listOfProblems.get(i));
             Thread.sleep(550);
         }
-        newCar.setKmaj(321000);
-        System.out.println("Seems like there's a " + listOfProblems.get(4) + " problem");
-        Thread.sleep(950);
-        System.out.println("You still have " + (newCar.getKmaj() - (150000 * 1.5)) + " Kms left before entering service");
-        Thread.sleep(950);
+        Thread.sleep(450);
+        System.out.println("Check eventual problems?");
+        String checking = scanToCheck.next();
+        if(checking.equalsIgnoreCase("yes")){
+            Thread.sleep(450);
+            System.out.println("What's the car's mileage?");
+            newCar.setKmaj(scanToCheck.nextInt());
+            Thread.sleep(500);
+            System.out.println("Ok, given the " + newCar.getKmaj() + " km");
+            Thread.sleep(350);
+            System.out.println("The most common problem is provided by: ");
+            Thread.sleep(550);
+            if(newCar.getKmaj() > 100000 && newCar.getKmaj() < 150000){
+                Thread.sleep(450);
+                System.out.println(listOfProblems.get(2));
+            }
+            else if(newCar.getKmaj() > 150000 && newCar.getKmaj() < 200000){
+                Thread.sleep(450);
+                System.out.println(listOfProblems.get(4));
+            }
+            else if(newCar.getKmaj() > 200000){
+                Thread.sleep(450);
+                System.out.println(listOfProblems.get(1));
+            }
+        }
+        Thread.sleep(450);
         afterStartShowWelcomePage();
     }
 
     String airConditioning = "";
     private void forsettingAC() throws InterruptedException{
         try (Scanner newScanner = new Scanner(System.in)) {
+            System.out.println("Want to set Ac On or Off?");
             airConditioning = newScanner.next();
             if(airConditioning.equalsIgnoreCase("On")){
                 System.out.println("Air conditioning is on");
@@ -82,6 +105,19 @@ public class OperatingThreads extends Thread{
                     System.out.println(autoORManual.toUpperCase() + " air conditioning, enjoy your journey");
                     Thread.sleep(500);
                 } else if(autoORManual.equalsIgnoreCase("manual")){
+                    System.out.println("Set a temperature");
+                    int temperature =newScanner.nextInt();
+                    if(temperature > 18 && temperature < 22){
+                        Thread.sleep(450);
+                        System.out.println("It must be hot outside");
+                        System.out.println("Temperature set to " + temperature);
+                        Thread.sleep(450);
+                    }
+                    else if(temperature > 22){
+                        Thread.sleep(450);
+                        System.out.println("Must be cold outside");
+                        System.out.println("Temperature set to " + temperature);
+                    }
                     System.out.println(autoORManual.toUpperCase() + " air conditioning, enjoy your journey");
                     Thread.sleep(500);
                 }
@@ -112,14 +148,6 @@ public class OperatingThreads extends Thread{
             } else if(cmd.equalsIgnoreCase("AC")){
                 forsettingAC();
             }
-            if (cmd != listActions[0] || cmd != listActions[1] || cmd != listActions[2] || cmd != listActions[3]){
-                System.out.println("Bye have a nice day");
-                Thread.sleep(450);
-                System.exit(0);
-            }
-
-
-
             if (cmd.equalsIgnoreCase("others")){
                 System.out.println("Ok, here's a list with other actions");
                 for (int i = 0; i < listActions.length; i++){
@@ -150,6 +178,10 @@ public class OperatingThreads extends Thread{
                         usePhone();
                         break;
                 }
+            }
+            else{
+                System.out.println("Ok, bye have a nice day :))");
+                System.exit(0);
             }
         }
     }
