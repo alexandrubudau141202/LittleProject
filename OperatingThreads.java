@@ -401,6 +401,8 @@ public class OperatingThreads extends Thread{
     }
     private void useAUX(){
         System.out.println("User Auxiliary Cable for audio input is in");
+        Thread.sleep(500);
+        afterStartShowWelcomePage();
     }
 
 
